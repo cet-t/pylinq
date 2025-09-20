@@ -14,6 +14,12 @@ class linq(Generic[T_SRC]):
         for e in self.__src:
             yield e
 
+    def __len__(self) -> int:
+        return self.__src.__len__()
+
+    def __str__(self) -> str:
+        return str(self.__src)
+
     def any(self, pred: PRED[[T_SRC], bool] | None = None) -> bool:
         if pred is None:
             return bool(self.__src)
@@ -73,14 +79,3 @@ class linq(Generic[T_SRC]):
         pred: PRED[[T_SRC], bool] | None = None,
     ) -> T_SRC | None:
         return self.last_or_default(pred, None)
-
-    def to_list(self) -> list[T_SRC]:
-        return self.__src
-
-    @staticmethod
-    def repeat(e: T_SRC, c: int) -> list[T_SRC]:
-        return [e for _ in range(c)]
-
-    @staticmethod
-    def range(c: int) -> list[int]:
-        return [i for i in range(c)]
